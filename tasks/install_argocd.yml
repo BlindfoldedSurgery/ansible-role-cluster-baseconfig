@@ -1,0 +1,10 @@
+---
+- name: Install argocd
+  community.kubernetes.helm:
+    name: "{{ argocd.name }}"
+    release_namespace: "{{ argocd.namespace }}"
+    chart_ref: "{{ argocd.chart.ref }}"
+    chart_version: "{{ argocd.chart.version }}"
+    update_repo_cache: true
+    atomic: true
+    values: "{{ lookup('template', argocd.yaml.j2) | from_yaml }}"

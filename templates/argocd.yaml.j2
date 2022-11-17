@@ -1,0 +1,37 @@
+global:
+  logging:
+    format: json
+
+configs:
+  repositories:
+    istio-helm-repo:
+      type: helm
+      name: istio
+      url: https://istio-release.storage.googleapis.com/charts
+
+secret:
+  # TODO: use this?
+  githubSecret: ""
+  # TODO: generate
+  argocdServerAdminPassword: password
+  argocdServerAdminPasswordMtime: "{{ ansible_date_time.date }}T{{ ansible_date_time.time }}{{ ansible_date_time.tz }}"
+
+dex:
+  enabled: false
+
+server:
+  certificate:
+    enabled: true
+    domain: argocd.carstens.tech
+    issuer:
+      group: cert-manager.io
+      kind: ClusterIssuer
+      name: letsencrypt-issuer
+
+  # TODO: bootstrap this later in argocd?
+  ingress:
+    enabled: false
+
+# TODO: enabler this later on
+notifications:
+  enabled: false

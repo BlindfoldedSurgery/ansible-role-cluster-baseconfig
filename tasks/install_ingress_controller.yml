@@ -1,0 +1,10 @@
+---
+- name: Install ingress-controller
+  community.kubernetes.helm:
+    name: "{{ ingress.name }}"
+    release_namespace: "{{ ingress.namespace }}"
+    chart_ref: "{{ ingress.chart.ref }}"
+    chart_version: "{{ ingress.chart.version }}"
+    update_repo_cache: true
+    atomic: true
+    values: "{{ lookup('template', ingress.yaml.j2) | from_yaml }}"

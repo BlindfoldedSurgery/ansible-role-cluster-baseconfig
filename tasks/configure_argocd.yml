@@ -1,0 +1,37 @@
+---
+- name: Create projects
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: AppProject
+      metadata:
+        name: "{{ item.name }}"
+        namespace: "{{ item.namespace }}"
+      spec: "{{ item.spec | to_nice_yaml(indent=2) }}"
+  with_items: "{{ argocd.projects }}"
+
+- name: Create bootstrap application
+  community.kubernetes.k8s:
+    definition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: argocd-bootstrap
+        namespace: "{{ argocd.namespace }}"
+      spec:
+        destination:
+          namespace: "{{ argocd.namespace }}"
+          server: "https://kubernetes.default.svc"
+        project: "{{ argocd.bootstrap.project }}"
+        source:
+          helm:
+            valueFiles:
+              - values.yaml
+          path: .
+          repoUrl: "{{ argocd.bootstrap.url }}"
+          targetRevision: "{{ argocd.bootstrap.revision | default('HEAD') }}"
+        syncPolicy:
+          automated:
+            prune: "{{ argocd.bootstrap.sync_options.prune | default(true) }}"
+            selfHeal: "{{ argocd.bootstrap.sync_options.selfHeal | default(true) }}"

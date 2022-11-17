@@ -1,0 +1,10 @@
+---
+- name: Install longhorn
+  community.kubernetes.helm:
+    name: "{{ longhorn.name }}"
+    release_namespace: "{{ longhorn.namespace }}"
+    chart_ref: "{{ longhorn.chart.ref }}"
+    chart_version: "{{ longhorn.chart.version }}"
+    update_repo_cache: true
+    atomic: true
+    values: "{{ lookup('template', longhorn.yaml.j2) | from_yaml }}"

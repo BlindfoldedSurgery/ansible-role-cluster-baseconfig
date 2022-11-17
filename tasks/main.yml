@@ -1,0 +1,22 @@
+---
+
+- name: Create namespaces
+  ansible.builtin.import_tasks: create_namespaces.yml
+  tags:
+    - cluster_baseconfig
+    - cluster_baseconfig:create
+    - cluster_baseconfig:create:namespaces
+
+- name: Install argocd
+  ansible.builtin.import_tasks: install_argocd.yml
+  tags:
+    - cluster_baseconfig
+    - cluster_baseconfig:install
+    - cluster_baseconfig:install:argocd
+
+- name: Configure argocd
+  ansible.builtin.import_tasks: configure_argocd.yml
+  tags:
+    - cluster_baseconfig
+    - cluster_baseconfig:config
+    - cluster_baseconfig:config:argocd

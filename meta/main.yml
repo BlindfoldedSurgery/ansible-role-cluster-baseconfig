@@ -1,0 +1,16 @@
+---
+
+dependencies: []
+
+galaxy_info:
+  role_name: 'cluster_baseconfig'
+  namespace: 'torbencarstens'
+  author: 'Torben Carstens'
+  description: 'base configuration for rke2 cluster'
+  min_ansible_version: 6.4.0
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+  galaxy_tags: []
+  license: MIT
