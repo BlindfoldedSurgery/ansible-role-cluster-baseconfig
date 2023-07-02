@@ -41,7 +41,7 @@ external_secrets:
     version: 0.9.0
   doppler:
     secret:
-      name: doppler-token-auth-api
+      name: doppler-token-mgmt-prod
   secretStore:
     name: doppler
     namespace: mgmt
