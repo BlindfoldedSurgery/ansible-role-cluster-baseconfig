@@ -1,18 +1,25 @@
 ---
 - name: Create projects
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: present
     definition:
       apiVersion: argoproj.io/v1alpha1
       kind: AppProject
       metadata:
-        name: "{{ item.name }}"
-        namespace: "{{ item.namespace }}"
-      spec: "{{ item.spec | to_nice_yaml(indent=2) }}"
-  with_items: "{{ argocd.projects }}"
+        name: "{{ argocd.bootstrapProject.name }}"
+        namespace: "{{ argocd.bootstrapProject.namespace }}"
+      spec:
+        clusterResourceWhitelist:
+          - group: "{{ argocd.bootstrapProject.spec.clusterResourceWhitelist.group }}"
+            kind: "{{ argocd.bootstrapProject.spec.clusterResourceWhitelist.kind }}"
+        destinations:
+          - namespace: "{{ argocd.bootstrapProject.spec.destinations.namespace }}"
+            server: "{{ argocd.bootstrapProject.spec.destinations.server }}"
+        sourceRepos:
+          - "{{ argocd.bootstrapProject.spec.sourceRepo }}"
 
 - name: Create bootstrap application
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     definition:
       apiVersion: argoproj.io/v1alpha1
       kind: Application
@@ -29,9 +36,11 @@
             valueFiles:
               - values.yaml
           path: .
-          repoUrl: "{{ argocd.bootstrap.url }}"
+          repoURL: "{{ argocd.bootstrap.url }}"
           targetRevision: "{{ argocd.bootstrap.revision | default('HEAD') }}"
         syncPolicy:
           automated:
             prune: "{{ argocd.bootstrap.sync_options.prune | default(true) }}"
             selfHeal: "{{ argocd.bootstrap.sync_options.selfHeal | default(true) }}"
+  # TODO: currently we simply skip this in check mode since it can't be verified on first install (CRD isn't available)
+  when: not ansible_check_mode

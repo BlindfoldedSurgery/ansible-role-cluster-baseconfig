@@ -1,11 +1,32 @@
 ---
 
+- name: Configure helm repositories
+  ansible.builtin.import_tasks: configure_helm_repositories.yml
+  tags:
+    - cluster_baseconfig
+    - cluster_baseconfig:configure
+    - cluster_baseconfig:configure:helm
+
 - name: Create namespaces
   ansible.builtin.import_tasks: create_namespaces.yml
   tags:
     - cluster_baseconfig
     - cluster_baseconfig:create
     - cluster_baseconfig:create:namespaces
+
+- name: Install external-secrets operator
+  ansible.builtin.import_tasks: install_external_secrets.yml
+  tags:
+    - cluster_baseconfig
+    - cluster_baseconfig:install
+    - cluster_baseconfig:install:externalsecrets
+
+- name: Configure doppler source for external-secrets operator
+  ansible.builtin.import_tasks: configure_external_secrets.yml
+  tags:
+    - cluster_baseconfig
+    - cluster_baseconfig:configure
+    - cluster_baseconfig:configure:externalsecrets
 
 - name: Install argocd
   ansible.builtin.import_tasks: install_argocd.yml

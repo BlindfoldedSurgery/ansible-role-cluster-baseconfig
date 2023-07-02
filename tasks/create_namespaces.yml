@@ -1,5 +1,4 @@
 ---
-
 - name: Create namespaces
   kubernetes.core.k8s:
     name: "{{ item }}"

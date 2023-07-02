@@ -1,0 +1,7 @@
+---
+- name: Add helm repositories
+  kubernetes.core.helm_repository:
+    name: "{{ item.key }}"
+    url: "{{ item.value }}"
+  loop: "{{ helm.repositories | dict2items }}"
+  check_mode: no
