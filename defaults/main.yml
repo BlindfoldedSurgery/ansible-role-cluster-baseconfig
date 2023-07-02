@@ -17,7 +17,7 @@ argocd:
     namespace: argocd
     spec:
       clusterResourceWhitelist:
-        group: "argoproj.io/v1alpha1"
+        group: "*"
         kind: "*"
       destinations:
         namespace: "argocd"
