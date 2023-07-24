@@ -32,6 +32,7 @@ helm:
   repositories:
     argo: https://argoproj.github.io/argo-helm
     external-secrets: https://charts.external-secrets.io
+    longhorn: https://charts.longhorn.io
 
 external_secrets:
   name: external-secrets
@@ -45,3 +46,10 @@ external_secrets:
   secretStore:
     name: doppler
     namespace: mgmt
+
+longhorn:
+  name: longhorn
+  namespace: longhorn-system
+  chart:
+    ref: longhorn/longhorn
+    version: 1.5.1

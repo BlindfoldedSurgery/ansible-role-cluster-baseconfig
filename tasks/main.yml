@@ -41,3 +41,10 @@
     - cluster_baseconfig
     - cluster_baseconfig:config
     - cluster_baseconfig:config:argocd
+
+- name: Install longhorn
+  ansible.builtin.import_tasks: install_longhorn.yml
+  tags:
+    - cluster_baseconfig
+    - cluster_baseconfig:install
+    - cluster_baseconfig:install:longhorn
