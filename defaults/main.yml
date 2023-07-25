@@ -27,6 +27,7 @@ argocd:
 namespaces:
   - mgmt
   - argocd
+  - longhorn-system
 
 helm:
   repositories:
