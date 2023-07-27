@@ -8,7 +8,7 @@ argocd:
     version: 5.36.11
   bootstrap:
     project: argocd
-    url: https://github.com/OpenAlcoholics/argocd-bootstrap.git
+    url: https://github.com/BlindfoldedSurgery/argocd-bootstrap.git
     sync_options:
       prune: false
       selfHeal: true
