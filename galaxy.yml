@@ -1,0 +1,15 @@
+namespace: "blindfoldedsurgery"
+name: "ansible_role_cluster_baseconfig"
+description: "Role to configure the cluster base (e.g. argocd)"
+
+version: "1.0.0"
+readme: "README.md"
+authors:
+  - "Torben Carstens"
+license:
+  - "MIT"
+tags:
+  - "infrastructure"
+  - "linux"
+  - "cloud"
+repository: "https://github.com/BlindfoldedSurgery/ansible-role-cluster-baseconfig"
